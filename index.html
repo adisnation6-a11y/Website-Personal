@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Album Cinta❤️ - (with Music)</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="book-container">
+    <div class="book" id="book">
+      <!-- Page 1 -->
+      <div class="page" id="page-1">
+        <div class="page-front">
+          <div class="page-content cover">
+            <div class="sparkles" id="sparkles-cover"></div>
+            <div class="cover-title">Kalau Apa?</div>
+            <div class="cover-subtitle">Cintaku</div>
+          </div>
+        </div>
+        <div class="page-back">
+          <div class="page-content">
+            <div class="text-content">Kalau adaa...<br>sembilan nyawaa...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 2 -->
+      <div class="page page-tilt-right" id="page-2">
+        <div class="page-front">
+          <div class="page-content">
+            <div class="photo-frame">
+              <img src="images/photo1.jpeg" alt="[photo1]">
+              <img src="images/emote/emote1.png" class="emot tl">
+              <img src="images/emote/emote2.png" class="emot tr">
+              <img src="images/emote/emote3.png" class="emot bl">
+              <img src="images/emote/emote4.gif" class="emot br">
+            </div>
+          </div>
+          <div class="page-number">1</div>
+        </div>
+        <div class="page-back">
+          <div class="page-content">
+            <div class="text-content">Mau samaa muu <br>sajaaa...<br>Semuanyaaa...</div>
+          </div>
+          <div class="page-number">2</div>
+        </div>
+      </div>
+
+      <!-- Page 3 -->
+      <div class="page page-tilt-left" id="page-3">
+        <div class="page-front">
+          <div class="page-content">
+            <div class="photo-frame">
+              <img src="images/photo2.jpg" alt="[photo2]">
+              <img src="images/emote/emote6.gif" class="emot tl">
+              <img src="images/emote/emote5.gif" class="emot tr">
+              <img src="images/emote/emote7.png" class="emot bl">
+              <img src="images/emote/emote8.png" class="emot br">
+            </div>
+          </div>
+          <div class="page-number">3</div>
+        </div>
+        <div class="page-back">
+          <div class="page-content">
+            <div class="text-content">Ini dadaa....</div>
+          </div>
+          <div class="page-number">4</div>
+        </div>
+      </div>
+
+      <!-- Page 4 -->
+      <div class="page page-tilt-slight-right" id="page-4">
+        <div class="page-front">
+          <div class="page-content">
+            <div class="photo-frame">
+              <img src="images/photo3.jpg" alt="[photo3]">
+              <img src="images/emote/emote9.png" class="emot tl">
+              <img src="images/emote/emote11.png" class="emot tr">
+              <img src="images/emote/emote10.png" class="emot bl">
+              <img src="images/emote/emote12.png" class="emot br">
+            </div>
+          </div>
+          <div class="page-number">5</div>
+        </div>
+        <div class="page-back">
+          <div class="page-content">
+            <div class="text-content">isinyaaa.. kamuu... <br> seemuaaa.....</div>
+          </div>
+          <div class="page-number">6</div>
+        </div>
+      </div>
+
+      <!-- Page 5 -->
+      <div class="page page-tilt-slight-left" id="page-5">
+        <div class="page-front">
+          <div class="page-content">
+            <div class="photo-frame">
+              <img src="images/photo4.jpg" alt="[photo4]">
+              <img src="images/emote/emote13.png" class="emot tl">
+              <img src="images/emote/emote14.gif" class="emot tr">
+              <img src="images/emote/emote15.png" class="emot bl">
+              <img src="images/emote/emote16.png" class="emot br">
+            </div>
+          </div>
+          <div class="page-number">7</div>
+        </div>
+        <div class="page-back">
+          <div class="page-content cover">
+            <div class="sparkles" id="sparkles-back"></div>
+            <div class="cover-title" style="font-size:32px;">Alamak inikah <br> jatuh cinta❤️</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="prevBtn" onclick="prevPage()">← Sebelumnya</button>
+    <button id="toggleAutoBtn" onclick="toggleAutoPlay()">▶️ Play Album</button>
+    <button id="nextBtn" onclick="nextPage()">Selanjutnya →</button>
+  </div>
+
+  <div class="music-panel">
+    <div class="music-left">🎵</div>
+    <div class="music-body">
+      <div class="music-filename" id="musicFilename">-</div>
+      <div class="music-controls">
+        <button class="small-btn" id="playAudioBtn">▶️</button>
+        <div class="music-status" id="musicStatus">Paused</div>
+        <div class="progress-container" id="progressContainer">
+          <div class="progress-fill" id="progressFill"></div>
+          <div class="progress-thumb" id="progressThumb" style="left:0%"></div>
+        </div>
+        <div class="time-label" id="timeLabel">0:00 / 0:00</div>
+      </div>
+    </div>
+  </div>
+
+  <audio id="bg-audio" src="music/Alamak-rizkyfebian.mp3" preload="metadata"></audio>
+  <script src="js/script.js"></script>
+
+</body>
+</html>

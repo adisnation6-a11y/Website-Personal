@@ -1,0 +1,167 @@
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+        font-family: Georgia, serif;
+        background: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+        min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;overflow:hidden;
+    }
+    .book-container{perspective:2500px;width:100%;height:100vh;position:fixed;top:0;left:0;display:flex;align-items:center;justify-content:center;}
+    .book{
+        width:1000px;height:400px;position:relative;transform-style:preserve-3d;
+        margin:0 auto;margin-left:calc(23% + 250px);
+    }
+    .book::before{
+        content:'';position:absolute;left:27%;top:0;bottom:0;width:40px;
+        transform:translateX(-50%);
+        background:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.15) 20%,rgba(0,0,0,.25) 50%,rgba(0,0,0,.15) 80%,transparent 100%);
+        opacity:0;transition:opacity 0.6s ease;pointer-events:none;z-index:999;
+    }
+    .book.has-open-pages::before{opacity:1;}
+    .page{position:absolute;width:500px;height:400px;transform-style:preserve-3d;
+        transform-origin:left center;transition:transform 0.6s cubic-bezier(.77,0,.175,1), box-shadow 0.4s ease;
+        cursor:pointer;left:50%;margin-left:-225px;backface-visibility:visible;}
+    .page.slow-flip{transition:transform 2.5s cubic-bezier(.77,0,.175,1), box-shadow 1s ease;}
+    .page-front,.page-back{
+        position:absolute;width:100%;height:100%;background:#fff;backface-visibility:hidden;
+        box-shadow:0 10px 50px rgba(0,0,0,.3),inset 0 0 100px rgba(0,0,0,.02);
+        display:flex;align-items:center;justify-content:center;
+        background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.01) 2px, rgba(0,0,0,.01) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.01) 2px, rgba(0,0,0,.01) 4px);
+    }
+    .page-back{transform:rotateY(180deg)}
+    .page.flipped{transform:rotateY(-180deg)}
+    .page.active{box-shadow:0 18px 70px rgba(0,0,0,.45)}
+    .page-content{width:100%;height:100%;padding:40px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .cover{
+        background:linear-gradient(135deg, rgba(0,0,0,.3) 0%, transparent 50%, rgba(255,255,255,.1) 100%),linear-gradient(135deg,#2d2d2d 0%,#1a1a1a 100%);
+        color:white;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;
+    }
+    .cover::before{
+        content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+        background:radial-gradient(circle, rgba(255,255,255,.05) 0%, transparent 70%);
+        animation:shine 8s infinite linear;
+    }
+    @keyframes shine{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+    .cover-title{font-size:48px;font-weight:700;text-shadow:2px 2px 4px rgba(0,0,0,.5),0 0 20px rgba(255,255,255,.3);position:relative;z-index:10;letter-spacing:2px}
+    .cover-subtitle{font-size:24px;color:#e0e0e0;font-style:italic;position:relative;z-index:10;text-shadow:1px 1px 2px rgba(0,0,0,.5)}
+    .text-content{
+        font-size:22px;line-height:1.9;color:hsl(0, 0%, 20%);text-align:center;font-style:italic;padding:10px;
+        text-shadow:0 1px 2px rgba(255,255,255,.8);position:relative;
+    }
+    .photo-frame{
+        width:80%;height:100%;background:linear-gradient(145deg, #fff);
+        border:0px solid #fff;box-shadow:0 8px 30px rgba(0,0,0,.2),inset 0 2px 4px rgba(0,0,0,.1),inset 0 -2px 4px rgba(255,255,255,.8);
+        display:flex;align-items:center;justify-content:center;overflow:visible;color:#999;position:relative;
+        transition:transform 0.6s ease;
+    }
+    .photo-frame::after{
+        content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+        background:linear-gradient(135deg, transparent 0%, rgba(255,255,255,.2) 50%, transparent 100%);pointer-events:none;
+    }
+    .photo-frame img{width:80%;height:80%;object-fit:cover;transition:transform 0.6s ease;}
+
+    /* Variasi kemiringan photo frame tiap halaman */
+    .page-tilt-right .photo-frame { transform: rotate(4deg); }
+    .page-tilt-left .photo-frame { transform: rotate(-4deg); }
+    .page-tilt-slight-right .photo-frame { transform: rotate(2deg); }
+    .page-tilt-slight-left .photo-frame { transform: rotate(-2deg); }
+
+    /* ✨ Emoticon dan rotasi foto */
+    .photo-frame .emot {
+    position: absolute;
+    width: 80px;
+    height: 90px;
+    pointer-events: none;
+    opacity: 0.95;
+    z-index: 5; /* pastikan di atas foto */
+    transform: translateY(-40%) scale(1.1); /* setengah keluar dari frame */
+    }
+
+    /* Posisi tiap emot */
+    .photo-frame .emot.tl { top: 0; left: 120px; transform: translateX(-185%) scale(1.1) rotate(10deg); }
+    .photo-frame .emot.tr { top: 35px; right: 0px; transform: translateY(-65%) scale(0.7) rotate(10deg); }
+    .photo-frame .emot.bl { bottom: -30px; left: 25px; transform: translateY(-20%) scale(1.1) rotate(-8deg); }
+    .photo-frame .emot.br { bottom: -30px; right: 25px; transform: translateY(-20%) scale(1.1) rotate(8deg); }
+
+    .page-number{position:absolute;bottom:20px;font-size:14px;color:#999}
+    .sparkles{position:absolute;width:100%;height:100%;pointer-events:none;overflow:hidden}
+    .sparkle{position:absolute;width:4px;height:4px;background:#fff;border-radius:50%;animation:sparkle 2s infinite;box-shadow:0 0 8px rgba(255,255,255,.8),0 0 12px rgba(255,255,255,.5)}
+    @keyframes sparkle{0%,100%{opacity:0;transform:scale(0)}50%{opacity:1;transform:scale(1)}}
+
+    /* --- Kontrol di bawah buku --- */
+    .controls{
+        position:fixed;
+        bottom:40px;
+        left:50%;
+        transform:translateX(-50%);
+        display:flex;
+        gap:20px;
+        z-index:2000;
+    }
+    button{
+        padding:12px 26px;
+        border-radius:26px;
+        border:0;
+        background:#fff;
+        cursor:pointer;
+        font-weight:700;
+        box-shadow:0 5px 20px rgba(0,0,0,.25);
+        transition:all 0.3s ease;
+    }
+    button:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,0,0,.35);}
+    button:disabled{opacity:.4;cursor:not-allowed}
+
+    /* --- Music panel (pojok kanan atas) --- */
+    .music-panel{
+        position:fixed;top:20px;right:20px;z-index:2500;width:360px;min-height:96px;padding:16px;border-radius:18px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+        border: 1px solid rgba(255,255,255,0.12);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+        backdrop-filter: blur(10px) saturate(130%);
+        display:flex;gap:12px;align-items:center;overflow:hidden;
+    }
+    .music-left{flex:0 0 64px;height:64px;border-radius:12px;background:linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
+    .music-body{flex:1;display:flex;flex-direction:column;gap:8px}
+    .music-filename{font-size:14px;color:#fff;opacity:.95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .music-controls{display:flex;align-items:center;gap:8px}
+    .small-btn{padding:8px 12px;border-radius:12px}
+    .music-status{font-size:12px;color:rgba(255,255,255,0.8)}
+    .progress-container{
+        width:100%;height:10px;background: rgba(255,255,255,0.08);border-radius:10px;position:relative;cursor:pointer;overflow:hidden;margin-left:8px;flex:1;
+    }
+    .progress-fill{
+        position:absolute;left:0;top:0;bottom:0;width:0%;
+        background: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));border-radius:10px;transition:width 0.1s linear;
+    }
+    .progress-thumb{
+        position:absolute;top:50%;transform:translate(-50%,-50%);
+        width:12px;height:12px;border-radius:50%;
+        background:white;box-shadow:0 2px 6px rgba(0,0,0,0.4);
+        pointer-events:none;
+    }
+    .time-label{font-size:12px;color:rgba(255,255,255,0.85);min-width:72px;text-align:right;margin-left:8px}
+
+    @media (max-width:900px){
+        .book{width:90%;height:360px}
+        .music-panel{right:16px;left:16px;width:auto;top:10px;}
+        .controls{flex-direction:column;bottom:20px;}
+    }
+
+    /* 🌠 Efek bintang jatuh acak */
+    .star-fall {
+        position: fixed;width:4px;height:4px;background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0.4) 70%);
+        border-radius: 50%;pointer-events: none;opacity: 1 ;z-index: 2500;
+        transform: translateZ(var(--depth, 0px)) rotate(0deg);
+        animation: starDrift var(--duration, 12s) linear forwards;
+        box-shadow: 0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.6);
+    }
+    @keyframes starDrift {
+        0% {opacity:1;transform:translate(0,0) scale(var(--scale,1)) rotate(0deg);}
+        100% {opacity:0;transform:translate(var(--dx,-100vw),var(--dy,100vh)) scale(var(--scaleEnd,0.4)) rotate(720deg);}
+    }
+
+    @keyframes fall {
+    0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+    
